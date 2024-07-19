@@ -11,12 +11,12 @@ docker run -it --rm \
     --volume /var/run/docker.sock:/var/run/docker.sock \
     --volume "$INSTALLTATION_DIR":/usr/src/code/appwrite:rw \
     --entrypoint="upgrade" \
-    appwrite/appwrite --http-port=8080 --https-port=443 --interactive=N --no-start=true
+    evdog/appwrite:v1.0.3 --http-port=8080 --https-port=443 --interactive=N --no-start=true
 
 # restore _APP_SETUP
 sed -i.bak "s/_APP_CONSOLE_WHITELIST_IPS=/_APP_CONSOLE_WHITELIST_IPS=\n_APP_SETUP=1-click-gitpod/g" .env
 
-VERSION=`grep "image: appwrite/appwrite:" docker-compose.yml | uniq | sed "s/^.*image: appwrite\/appwrite://g"`
+VERSION=`grep "image: evdog/appwrite:" docker-compose.yml | uniq | sed "s/^.*image: evdog\/appwrite://g"`
 git checkout -b feat-$VERSION
 git add .env docker-compose.yml
 git commit -m "feat: update to $VERSION release"
